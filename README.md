@@ -3,7 +3,7 @@
 
 ## AIM:
 
-To implement the simple substitution technique named Caesar cipher using Python language.
+To implement the simple substitution technique named Caesar cipher using C language.
 
 ## DESCRIPTION:
 
@@ -28,38 +28,59 @@ becomes C. To change a message back, each letter is replaced by the one three be
 
 
 ## PROGRAM :-
-```py
+```c
 
-def caesar_cipher_encrypt(text, key):
-    cipher = ""
-    for ch in text:
-        if ch.isupper():
-            cipher += chr((ord(ch) - ord('A') + key) % 26 + ord('A'))
-        elif ch.islower(): 
-            cipher += chr((ord(ch) - ord('a') + key) % 26 + ord('a'))
-        else:
-            cipher += ch  
-    return cipher
-def caesar_cipher_decrypt(cipher, key):
-    plain = ""
-    for ch in cipher:
-        if ch.isupper():  
-            plain += chr((ord(ch) - ord('A') - key) % 26 + ord('A'))
-        elif ch.islower():  
-            plain += chr((ord(ch) - ord('a') - key) % 26 + ord('a'))
-        else:
-            plain += ch
-    return plain
-plain = input("Enter the plain text: ")
-key = int(input("Enter the key value: "))
+#include <stdio.h>
+#include <ctype.h>
+#include <string.h>
 
-print("\nPLAIN TEXT:", plain)
+void encrypt(char text[], int key, char cipher[]) {
+    int i;
+    for (i = 0; text[i] != '\0'; i++) {
+        if (isupper(text[i]))
+            cipher[i] = ((text[i] - 'A' + key) % 26) + 'A';
+        else if (islower(text[i]))
+            cipher[i] = ((text[i] - 'a' + key) % 26) + 'a';
+        else
+            cipher[i] = text[i];
+    }
+    cipher[i] = '\0';
+}
 
-cipher = caesar_cipher_encrypt(plain, key)
-print("ENCRYPTED TEXT:", cipher)
+void decrypt(char cipher[], int key, char plain[]) {
+    int i;
+    for (i = 0; cipher[i] != '\0'; i++) {
+        if (isupper(cipher[i]))
+            plain[i] = ((cipher[i] - 'A' - key) % 26 + 26) % 26 + 'A';
+        else if (islower(cipher[i]))
+            plain[i] = ((cipher[i] - 'a' - key) % 26 + 26) % 26 + 'a';
+        else
+            plain[i] = cipher[i];
+    }
+    plain[i] = '\0';
+}
 
-decrypted = caesar_cipher_decrypt(cipher, key)
-print("DECRYPTED TEXT:", decrypted)
+int main() {
+    char plain[100], cipher[100], decrypted[100];
+    int key;
+
+    printf("Enter the plain text: ");
+    fgets(plain, sizeof(plain), stdin);
+    plain[strcspn(plain, "\n")] = 0;
+
+    printf("Enter the key value: ");
+    scanf("%d", &key);
+
+    printf("\nPLAIN TEXT: %s\n", plain);
+
+    encrypt(plain, key, cipher);
+    printf("ENCRYPTED TEXT: %s\n", cipher);
+
+    decrypt(cipher, key, decrypted);
+    printf("DECRYPTED TEXT: %s\n", decrypted);
+
+    return 0;
+}
 
 ```
 
@@ -68,11 +89,11 @@ print("DECRYPTED TEXT:", decrypted)
 
 
 
-<img width="1718" height="979" alt="image" src="https://github.com/user-attachments/assets/a69ebac7-74bb-46b5-ad0e-896f45cb4dcd" />
+<img width="1849" height="998" alt="image" src="https://github.com/user-attachments/assets/6c858bea-ffd1-4338-8071-18c77911681c" />
 
 
 
 
 ## Result:
-The implementation of the simple substitution technique named Caesar cipher using Python language was completed and executed successfully.
+The implementation of the simple substitution technique named Caesar cipher using C language was completed and executed successfully.
 
